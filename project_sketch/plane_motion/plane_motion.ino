@@ -13,7 +13,7 @@ int numberOfVerticalDisplays = 1; // количество матриц по-ве
 Max72xxPanel matrix = Max72xxPanel(pinCS, numberOfHorizontalDisplays, numberOfVerticalDisplays);
 
 int status;
-long int timer;
+long int timer, timer2;
 float angle_x, angle_y, angle_z;
 float s_x, s_y;
 float gyro_x_zero, gyro_y_zero, gyro_z_zero, accel_x_zero, accel_y_zero, accel_z_zero;
@@ -45,14 +45,19 @@ void loop()
     IMU.readSensor();
     getAngle();
     getPos();
-    matrix.drawPixel(7 - pos_x, pos_y, 1); 
-    matrix.write();
-    matrix.fillScreen(LOW);
-    Serial.print(angle_x);
-    Serial.print(" , ");
-    Serial.print(pos_x);
-    Serial.print(" , ");
-    Serial.println(s_x);
-    
+      matrix.drawPixel(7 - pos_x, pos_y, 1); 
+      matrix.write();
+      matrix.fillScreen(LOW);
+      Serial.print(angle_x);
+      Serial.print(" , ");
+      Serial.print(pos_x);
+      Serial.print(" , ");
+      Serial.print(s_x + 3.5);
+      Serial.print(" , ");
+      Serial.print(angle_y);
+      Serial.print(" , ");
+      Serial.print(pos_y);
+      Serial.print(" , ");
+      Serial.println(s_y + 3.5);
   }
 }
