@@ -1,7 +1,7 @@
-#include "MPU9250.h"
-#include <SPI.h>
-#include <Adafruit_GFX.h>
-#include <Max72xxPanel.h>
+#include "MPU9250.h"  //библиотека для работы с mpu9250
+#include <SPI.h>  //библиотека для работы с матрицей
+#include <Adafruit_GFX.h>  //библиотека для работы с матрицей
+#include <Max72xxPanel.h>  //библиотека для работы с матрицей
 
 
 #define time_period 1000

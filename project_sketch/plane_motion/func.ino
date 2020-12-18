@@ -1,5 +1,5 @@
 
-void getAngle()
+void getAngle() // с помощью акселерометра и гироскопа считаем угол отклонения от начального положения
 {
   float K =0.99;
   angle_x = K*(angle_x + (IMU.getGyroX_rads() - gyro_x_zero) * time_period/1000000.0) + (1 - K) * (5.3 / 57.2957f + atan2(-(IMU.getAccelY_mss() - accel_y_zero), -(IMU.getAccelZ_mss() - accel_z_zero))); 
@@ -8,7 +8,7 @@ void getAngle()
   angle_z += 57.2957f * (IMU.getGyroZ_rads() - gyro_z_zero) * time_period/1000000.0;
 }
 
-void calibrate()
+void calibrate() // калибровка гироскопа
 { 
   int i = 0;
   int calibrate_num = 10000;
@@ -35,7 +35,7 @@ void calibrate()
   accel_z_zero /= calibrate_num;
 }
 
-void getPos()
+void getPos() // определние позиции шарика, учитывая его ускорение
 {
   s_x +=(abs(angle_x)>0.02 ? 5 * 9.80665 * sin(angle_x) * (time_period/1000000.0) * (1 + time_period/2000000.0) : 0);
   s_y +=(abs(angle_y)>0.02 ? 5 * 9.80665 * sin(angle_y) * (time_period/1000000.0) * (1 + time_period/2000000.0) : 0);
