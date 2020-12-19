@@ -16,7 +16,7 @@ void calibrate() // калибровка гироскопа
   {
     if (timer < micros())
     {
-      timer = micros + time_period;
+      timer = micros() + time_period;
       IMU.readSensor();
       gyro_x_zero += IMU.getGyroX_rads();
       gyro_y_zero += IMU.getGyroY_rads();
@@ -37,38 +37,38 @@ void calibrate() // калибровка гироскопа
 
 void getPos() // определние позиции шарика, учитывая его ускорение
 {
-  s_x +=(abs(angle_x)>0.02 ? 5 * 9.80665 * sin(angle_x) * (time_period/1000000.0) * (1 + time_period/2000000.0) : 0);
-  s_y +=(abs(angle_y)>0.02 ? 5 * 9.80665 * sin(angle_y) * (time_period/1000000.0) * (1 + time_period/2000000.0) : 0);
-  if (abs(s_x) + 3.5 < 7 && abs(s_y) + 3.5 < 7)
+  s_x +=(abs(angle_x)>0.01 ? 8 * 9.80665f * sin(angle_x) * (time_period/1000000.0) * (1 + time_period/2000000.0) : 0);
+  s_y +=(abs(angle_y)>0.01 ? 8 * 9.80665f * sin(angle_y) * (time_period/1000000.0) * (1 + time_period/2000000.0) : 0);
+  if (abs(s_x) + 3 < 7 && abs(s_y) + 3 < 7)
   {
-    pos_x = round(s_x + 3.6);
-    pos_y = round(s_y + 3.6);
+    pos_x = (round(s_x) > 0 ? round(s_x) + 3 : round(s_x) + 4);
+    pos_y = (round(s_y) > 0 ? round(s_y) + 3 : round(s_y) + 4);
   }
-  else if (abs(s_y) + 3.5 < 7)
+  else if (abs(s_y) + 3 < 7)
   {
-    pos_y = s_y + 3.6;
-    if (s_x > 1 && angle_x < 0)
-      s_x = 3.5;
-    if (s_x < -1 && angle_x > 0)
-      s_x = -3.5;
+    pos_y = (round(s_y) > 0 ? round(s_y) + 3 : round(s_y) + 4);
+    if (s_x > 1 && angle_x > 0)
+      s_x = 4;
+    if (s_x < -1 && angle_x < 0)
+      s_x = -4;
   }
-  else if (abs(s_x) + 3.5 < 7)
+  else if (abs(s_x) + 3 < 7)
   {
-    pos_x =s_x + 3.6;
-    if (s_y > 1 && angle_y < 0)
-      s_y = 3.5;
-    if (s_y < -1 && angle_y > 0)
-      s_y = -3.5;
+    pos_x = (round(s_x) > 0 ? round(s_x) + 3 : round(s_x) + 4);
+    if (s_y > 1 && angle_y > 0)
+      s_y = 4;
+    if (s_y < -1 && angle_y < 0)
+      s_y = -4;
   }
   else 
   {
-    if (s_x > 1 && angle_x < 0)
-      s_x = 3.5;
-    if (s_x < -1 && angle_x > 0)
-      s_x = -3.5;
-    if (s_y > 1 && angle_y < 0)
-      s_y = 3.5;
-    if (s_y < -1 && angle_y > 0)
-      s_y = -3.5;
+    if (s_x > 1 && angle_x > 0)
+      s_x = 4;
+    if (s_x < -1 && angle_x < 0)
+      s_x = -4;
+    if (s_y > 1 && angle_y > 0)
+      s_y = 4;
+    if (s_y < -1 && angle_y < 0)
+      s_y = -4;
   }
 }

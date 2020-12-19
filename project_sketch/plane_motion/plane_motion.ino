@@ -23,9 +23,10 @@ void setup()
   Serial.begin(115200);
   Serial.println("angle_x, s_x");
   status = IMU.begin();
+  status = IMU.calibrateGyro ();
+  status = IMU.calibrateAccel ();
   matrix.setIntensity(1); // яркость от 0 до 15
   matrix.fillScreen(LOW); // очистка матрицы
-  calibrate;
   if (status < 0) 
   {   
     Serial.println("IMU initialization unsuccessful");
@@ -50,14 +51,10 @@ void loop()
       matrix.fillScreen(LOW);
       Serial.print(angle_x);
       Serial.print(" , ");
-      Serial.print(pos_x);
-      Serial.print(" , ");
-      Serial.print(s_x + 3.5);
+      Serial.print(s_x, 6) ;
       Serial.print(" , ");
       Serial.print(angle_y);
       Serial.print(" , ");
-      Serial.print(pos_y);
-      Serial.print(" , ");
-      Serial.println(s_y + 3.5);
+      Serial.println(s_y, 6);
   }
 }
